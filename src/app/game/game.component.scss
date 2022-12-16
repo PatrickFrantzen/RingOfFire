@@ -51,3 +51,22 @@
         transform: scale(1.0) translateX(180px) translateY(-180px) rotate(-10deg);
     }
 }
+
+.player-position {
+    position: absolute;
+    right: 0;
+}
+
+.btn-add {
+    position: absolute;
+    right: 32px;
+    bottom: 32px;
+}
+
+.pin-bottom {
+    position: absolute;
+    bottom: 35px;
+    left: 100px;
+    right: 100px;
+    background-color: white;
+}
