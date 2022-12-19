@@ -24,6 +24,7 @@ export class GameComponent implements OnInit {
   db = getFirestore();
   dbRef = collection(this.db, 'games');
   gameId;
+  
 
   constructor(private firestore: Firestore, public dialog: MatDialog, private route: ActivatedRoute) { 
     this.gameCollection = collection(firestore, 'games');
@@ -35,9 +36,15 @@ export class GameComponent implements OnInit {
     this.newGame();
     this.route.params.subscribe((params): void => {
       this.gameId = params['id'];
-      console.log('Die ID lautet', params['id']);
-      const docRef =  doc(this.db, 'games',this.gameId);
+      console.log('Die ID lautet', params['id']); //ID zum testen: LAfx517YlxXP98ZzLIZ8
+      const docRef =  doc(this.db, 'games', this.gameId);
       getDoc(docRef);
+      /*
+      this.game.currentPlayer = game.currentPlayer;
+      this.game.playedCards = game.playedCards;
+      this.game.players = game.players;
+      this.game.stack = game.stack;
+      */
     })
    /*this.games$.subscribe( (newGames) => {
       console.log('Neues Spiel ist:', newGames);
