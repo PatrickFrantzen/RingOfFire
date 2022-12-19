@@ -15,7 +15,7 @@ import { databaseInstance$ } from '@angular/fire/database';
   templateUrl: './game.component.html',
   styleUrls: ['./game.component.scss']
 })
-export class GameComponent implements OnInit {
+export class GameComponent implements OnInit{
 
   game: Game;
   games$: Observable<any>;
@@ -50,7 +50,6 @@ export class GameComponent implements OnInit {
         this.game.currentCard = data.currentCard;
       })
     })
-
   }
 
 
@@ -61,6 +60,7 @@ export class GameComponent implements OnInit {
   takeCard() {
     if (!this.game.pickCardAnimation) {
       this.game.currentCard = this.game.stack.pop();
+      console.log('after Timeout',this.game.currentCard)
       this.game.pickCardAnimation = true;
       this.game.currentPlayer++;
       this.game.currentPlayer = this.game.currentPlayer % this.game.players.length;
@@ -69,7 +69,9 @@ export class GameComponent implements OnInit {
       this.game.playedCards.push(this.game.currentCard);
       this.game.pickCardAnimation = false;
       this.saveGame();
+      console.log('after Timeout',this.game)
     }, 1000);
+    
   }
 
   openDialog(): void {
@@ -85,6 +87,7 @@ export class GameComponent implements OnInit {
 
   saveGame() {
     updateDoc(this.docRef, this.game.toJson())
+
   }
 
 }
