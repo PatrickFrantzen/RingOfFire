@@ -5,7 +5,7 @@ import { DialogAddPlayerComponent } from '../dialog-add-player/dialog-add-player
 import { Firestore, collectionData, collection, doc, getFirestore, onSnapshot, getDoc, getDocs } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { setDoc } from '@firebase/firestore';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { async } from '@firebase/util';
 import { databaseInstance$ } from '@angular/fire/database';
 
@@ -27,7 +27,7 @@ export class GameComponent implements OnInit {
   gameId;
   
 
-  constructor(private firestore: Firestore, public dialog: MatDialog, private route: ActivatedRoute) { 
+  constructor(private firestore: Firestore, public dialog: MatDialog, private route: ActivatedRoute, private router: Router) { 
     this.gameCollection = collection(firestore, 'games');
     this.games$ = collectionData(this.gameCollection);
   }
@@ -40,32 +40,22 @@ export class GameComponent implements OnInit {
       console.log('Die ID lautet', params['id']); //ID zum testen: LAfx517YlxXP98ZzLIZ8
       const docRef =  doc(this.db, 'games', this.gameId);
       let docSnap = await getDoc(docRef);
-      console.log(docSnap.data());
+      console.log('data',docSnap.data());
       let data = docSnap.data();
       this.games$.subscribe(() => {
-        this.game.currentPlayer = data.game.currentPlayer;
-        this.game.playedCards = data.game.playedCards;
-        this.game.players = data.game.players;
-        this.game.stack = data.game.stack;
+        this.game.currentPlayer = data.currentPlayer;
+        this.game.playedCards = data.playedCards;
+        this.game.players = data.players;
+        this.game.stack = data.stack;
       })
-
-    
     })
-   /*this.games$.subscribe( (newGames) => {
-      console.log('Neues Spiel ist:', newGames);
-      this.games = newGames;
-    })*/
+
   }
 
 
   newGame() {
-    this.game = new Game();
-    /*let docRef = doc(this.gameCollection, 'games');
-    setDoc(docRef, this.game.toJson())*/
-    /*.catch(error => {
-      console.log(error);
-    })*/
-    console.log(this.game)
+   this.game = new Game();
+
     /*onSnapshot(this.dbRef, docsSnap => {
       docsSnap.forEach(doc => {
         console.log('Inhalte des Docs ist:',doc.data());
