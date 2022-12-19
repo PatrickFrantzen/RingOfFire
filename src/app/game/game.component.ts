@@ -35,13 +35,12 @@ export class GameComponent implements OnInit{
 
   ngOnInit(): void {
     this.newGame();
-    this.route.params.subscribe(async (params): Promise<void> => {
+    this.route.params.subscribe( (params):void => {
       this.gameId = params['id'];
-      this.docRef =  doc(this.db, 'games', this.gameId);
-      let docSnap = await getDoc(this.docRef);
-      console.log('data',docSnap.data());
-      let data:any = docSnap.data();
-      this.games$.subscribe(() => {
+      this.games$.subscribe(async() => {
+        this.docRef =  doc(this.db, 'games', this.gameId);
+        let docSnap = await getDoc(this.docRef);
+        let data:any = docSnap.data();
         this.game.currentPlayer = data.currentPlayer;
         this.game.playedCards = data.playedCards;
         this.game.players = data.players;
@@ -60,16 +59,15 @@ export class GameComponent implements OnInit{
   takeCard() {
     if (!this.game.pickCardAnimation) {
       this.game.currentCard = this.game.stack.pop();
-      console.log('after Timeout',this.game.currentCard)
       this.game.pickCardAnimation = true;
       this.game.currentPlayer++;
       this.game.currentPlayer = this.game.currentPlayer % this.game.players.length;
+      this.saveGame();
     }
     setTimeout(() => {
       this.game.playedCards.push(this.game.currentCard);
       this.game.pickCardAnimation = false;
       this.saveGame();
-      console.log('after Timeout',this.game)
     }, 1000);
     
   }
@@ -87,7 +85,6 @@ export class GameComponent implements OnInit{
 
   saveGame() {
     updateDoc(this.docRef, this.game.toJson())
-
   }
 
 }
