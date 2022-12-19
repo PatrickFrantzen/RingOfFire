@@ -6,7 +6,6 @@ import { Component, Input, OnChanges, OnInit } from '@angular/core';
   styleUrls: ['./rule-description.component.scss']
 })
 export class RuleDescriptionComponent implements OnInit, OnChanges{
-
   title:string = '';
   description:string = '';
   @Input() card:string;
