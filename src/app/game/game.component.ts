@@ -23,6 +23,7 @@ export class GameComponent implements OnInit {
   gameCollection;
   db = getFirestore();
   dbRef = collection(this.db, 'games');
+  gameId;
 
   constructor(private firestore: Firestore, public dialog: MatDialog, private route: ActivatedRoute) { 
     this.gameCollection = collection(firestore, 'games');
@@ -33,10 +34,10 @@ export class GameComponent implements OnInit {
   ngOnInit(): void {
     this.newGame();
     this.route.params.subscribe((params): void => {
+      this.gameId = params['id'];
       console.log('Die ID lautet', params['id']);
-      let docRef = doc(this.gameCollection, 'games', params['id']);
+      const docRef =  doc(this.db, 'games',this.gameId);
       getDoc(docRef);
-
     })
    /*this.games$.subscribe( (newGames) => {
       console.log('Neues Spiel ist:', newGames);
