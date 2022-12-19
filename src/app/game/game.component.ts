@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import { setDoc } from '@firebase/firestore';
 import { ActivatedRoute } from '@angular/router';
 import { async } from '@firebase/util';
+import { databaseInstance$ } from '@angular/fire/database';
 
 
 @Component({
@@ -34,17 +35,21 @@ export class GameComponent implements OnInit {
 
   ngOnInit(): void {
     this.newGame();
-    this.route.params.subscribe((params): void => {
+    this.route.params.subscribe(async (params): Promise<void> => {
       this.gameId = params['id'];
       console.log('Die ID lautet', params['id']); //ID zum testen: LAfx517YlxXP98ZzLIZ8
       const docRef =  doc(this.db, 'games', this.gameId);
-      getDoc(docRef);
-      /*
-      this.game.currentPlayer = game.currentPlayer;
-      this.game.playedCards = game.playedCards;
-      this.game.players = game.players;
-      this.game.stack = game.stack;
-      */
+      let docSnap = await getDoc(docRef);
+      console.log(docSnap.data());
+      let data = docSnap.data();
+      this.games$.subscribe(() => {
+        this.game.currentPlayer = data.game.currentPlayer;
+        this.game.playedCards = data.game.playedCards;
+        this.game.players = data.game.players;
+        this.game.stack = data.game.stack;
+      })
+
+    
     })
    /*this.games$.subscribe( (newGames) => {
       console.log('Neues Spiel ist:', newGames);
