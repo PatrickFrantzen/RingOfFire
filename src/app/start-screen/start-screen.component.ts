@@ -22,9 +22,10 @@ export class StartScreenComponent implements OnInit{
 
   }
 
-
+/**
+ * A new Game is created, the data is send as a json to database and the user is navigated to a specific game with unique id
+ */
   async newGame() {
-    //Start game
     this.game = new Game;
     let docRef = doc(this.gameCollection);
     setDoc(docRef, this.game.toJson());

@@ -32,6 +32,9 @@ export class RuleDescriptionComponent implements OnInit, OnChanges{
     
   }
 
+  /**
+   * card title and card text is shown according to the card and the array of descriptions
+   */
   ngOnChanges(): void {
     if(this.card) {
       let cardNumber =  +this.card.split('_')[1];

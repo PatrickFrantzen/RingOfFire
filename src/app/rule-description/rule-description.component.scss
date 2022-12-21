@@ -1,6 +1,13 @@
 mat-card {
+
+    padding: 15px;
+
     @media (max-width: 720px) {
         min-height: 130px;
     }
+}
+
+mat-card-content {
+    padding: 0;
 }
 
