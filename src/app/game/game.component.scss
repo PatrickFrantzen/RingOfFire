@@ -52,15 +52,22 @@
     }
 }
 
-.player-position {
-    position: absolute;
-    right: 0;
-}
+
 
 .btn-add {
     position: absolute;
     right: 32px;
     bottom: 32px;
+
+    @media (max-width: 720px) {
+        bottom: 150px;
+        right: 5px;
+    }
+}
+
+.player-position {
+    position: absolute;
+    right: 0;
 }
 
 .pin-bottom {
@@ -69,4 +76,46 @@
     left: 100px;
     right: 100px;
     background-color: white;
+
+    @media (max-width: 720px) {
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+}
+
+.scroll-container-mobile {
+    display: flex;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    overflow-x: auto;
+
+    app-player-mobile {
+        margin-left: 5px;
+    }
+}
+
+app-player, app-player-mobile {
+    cursor: pointer;
+
+    &:hover {
+        filter: brightness(1.15);
+    } 
+}
+
+.game-Over {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+        width: 300px;
+    }
+}
+
+.preloadImage {
+    opacity: 0;
+    z-index: -9999999;
 }
