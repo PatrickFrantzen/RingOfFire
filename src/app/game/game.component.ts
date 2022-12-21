@@ -32,6 +32,7 @@ export class GameComponent implements OnInit{
 
   ngOnInit(): void {
     this.newGame();
+    this.openDialog();
     this.route.params.subscribe( (params):void => {
       this.gameId = params['id'];
       this.games$.subscribe(async() => {
